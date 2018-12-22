@@ -9,12 +9,14 @@
  */
 
 "use strict";
-
 // global variables
 var canvas;
 var gl;
 var pBuffer;  // position buffer
 var cBuffer;  // color buffer
+
+var theta = 0.0;
+var thetaLoc;
 
 
 
@@ -81,6 +83,7 @@ window.onload = function init() {
     var vPosition = gl.getAttribLocation(program, "vPosition");
     gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
+
 
 
     //
@@ -162,6 +165,9 @@ window.onload = function init() {
 
 
     alert("About to render -- "+ index + " vertexes");
+
+    thetaLoc = gl.getUniformLocation( program, "theta" );
+
     // render away
     render();
 }
@@ -173,6 +179,8 @@ function render() {
     // clear the working buffer
     gl.clear( gl.COLOR_BUFFER_BIT );
 
+    theta += 0.1;
+    gl.uniform1f( thetaLoc, theta );
 
     // render index vertices and colors from their buffers
     gl.drawArrays( gl.TRIANGLES, 0, index );

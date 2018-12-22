@@ -16,40 +16,29 @@
     // and the color (vColor) to fColor (which is passed to the
     // fragment shader.
 
-    // attributes vPosition and vColor, passed from application
-    // via buffers
+
     attribute vec4 vPosition;
     attribute vec4 vColor;
 
-
-    // varying fColor, passed from vertex shader
-    // to fragment shader
     varying vec4 fColor;
-    uniform int t;
-    // ------------------------
-    //
+    //uniform int t;
 
-
-
-    // ------------------
-    //
-    // main() of vector shader
-    //
-    // vector shader applies a twist in the xy plane with a twistfactor
-    // of 1 and a twist angle of twistTheta and then a xy-rotation about
-    // the origin with an angle thetaRotation.  The twist is non-linear
-    // and must be applied by a function call.  The rotation is an
-    // affine transformation and is applied by a matrix multiplication.
-
-
+    uniform float theta;
     void
     main()
     {
 
-    vec4 tPosition = vec4(vPosition.x + t, vPosition.y, vPosition.z, vPosition.w);
+    //vec4 tPosition = vec4(vPosition.x + t, vPosition.y, vPosition.z, vPosition.w);
 
+    float s = sin( theta );
+    float c = cos( theta );
 
-    gl_Position = vPosition;
+    gl_Position.x = -s * vPosition.x + c * vPosition.y;
+    gl_Position.y =  s * vPosition.y + c * vPosition.x;
+    gl_Position.z = 0.0;
+    gl_Position.w = 1.0;
+
+    //gl_Position = vPosition;
     fColor = vColor;
     }
 </script>

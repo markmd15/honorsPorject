@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+    // VERTEX SHADER
+    // This is called and applied to every vertex. The vertex
+    // in this shader has two "attributes", a position (vPosition)
+    // and a color (vColor)
+    //
+    // This shader assigns the position (vPosition) to gl_Position,
+    // and the color (vColor) to fColor (which is passed to the
+    // fragment shader.
+
+    // attributes vPosition and vColor, passed from application
+    // via buffers
+    attribute vec4 vPosition;
+    attribute vec4 vColor;
+
+
+    // varying fColor, passed from vertex shader
+    // to fragment shader
+    varying vec4 fColor;
+    uniform int t;
+    // ------------------------
+    //
+
+
+
+    // ------------------
+    //
+    // main() of vector shader
+    //
+    // vector shader applies a twist in the xy plane with a twistfactor
+    // of 1 and a twist angle of twistTheta and then a xy-rotation about
+    // the origin with an angle thetaRotation.  The twist is non-linear
+    // and must be applied by a function call.  The rotation is an
+    // affine transformation and is applied by a matrix multiplication.
+
+
+    void
+    main()
+    {
+
+    vec4 tPosition = vec4(vPosition.x + t, vPosition.y, vPosition.z, vPosition.w);
+
+
+    gl_Position = vPosition;
+    fColor = vColor;
+    }
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+// FRAGMENT SHADER
+// This is applied to every vertex
+
+// set floating point precision to be "medium"
+precision mediump float;
+
+//  varying fColor (passed from vertex shader) is
+// assigned to gl_FragColor.
+varying vec4 fColor;
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<body>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="Triangle.js"></script>
+</body>
+
+</body>
+<canvas id="gl-canvas" width="512" height="512">
+    Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+</body>
+
+</html>
+

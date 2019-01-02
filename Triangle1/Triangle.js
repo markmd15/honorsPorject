@@ -14,6 +14,10 @@ var canvas;
 var gl;
 var pBuffer;  // position buffer
 var cBuffer;  // color buffer
+var crabBuffer;
+var crabColorBuffer;
+var indexBuffer;
+
 
 var theta = 0.0;
 var thetaLoc;
@@ -78,6 +82,7 @@ window.onload = function init() {
     gl.bindBuffer(gl.ARRAY_BUFFER, pBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, 8*maxNumVertices, gl.STATIC_DRAW);
 
+
     // associate JavaScript vPosition with vertex shader attribute "vPosition"
     // as a two dimensional vector where each component is a float
     var vPosition = gl.getAttribLocation(program, "vPosition");
@@ -99,6 +104,44 @@ window.onload = function init() {
     gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vColor);
 
+    indexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, pBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, 8*maxNumVertices, gl.STATIC_DRAW);
+
+    var vIndex = gl.getAttribLocation( program, "vIndex");
+    gl.vertexAttribPointer(vIndex, 4, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vIndex);
+
+
+    /*
+    //__________________________________________________////
+    //Crabs:
+    crabBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, crabBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, 8*maxNumVertices, gl.STATIC_DRAW);
+
+
+    // associate JavaScript vPosition with vertex shader attribute "vPosition"
+    // as a two dimensional vector where each component is a float
+    var crabPosition = gl.getAttribLocation(program, "crabPosition");
+    gl.vertexAttribPointer(crabPosition, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(crabPosition);
+
+
+
+    //
+    // set up cBuffer as a buffer where each entry is 16 bytes
+    // (4x4 bytes, of 4 thirtytwo bit colors)
+    crabColorBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, crabColorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, 16*maxNumVertices, gl.STATIC_DRAW);
+
+    // associate JavaScript vColor with vertex shader attribute "vColor"
+    // as a four dimensional vector (RGBA)
+    var crabColor = gl.getAttribLocation( program, "crabColor");
+    gl.vertexAttribPointer(crabColor, 4, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(crabColor);
+    */
 
 
 
@@ -219,6 +262,38 @@ function mytriangle(aa, bb, cc, cccc)
 
 }
 
+//BAD CODING__________________________________________________________//
+
+
+/*
+function crabtriangle(aa, bb, cc, cccc)
+{
+
+    // focus on vBuffer (vertex buffer)
+    gl.bindBuffer( gl.ARRAY_BUFFER, crabBuffer);
+    gl.bufferSubData(gl.ARRAY_BUFFER, 8*index, flatten((aa)));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 8*(index+1), flatten((bb)));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 8*(index+2), flatten((cc)));
+
+
+    // focus on cBuffer (color buffer)
+    gl.bindBuffer( gl.ARRAY_BUFFER, crabColorBuffer);
+    gl.bufferSubData(gl.ARRAY_BUFFER, 16*index, flatten(cccc));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 16*(index+1), flatten(cccc));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 16*(index+2), flatten(cccc));
+
+
+
+    // increase number of vertices
+    index=index+3;
+
+    // alert("mytriangle: after index: index="+index);
+
+    return;
+
+}
+*/
+
 function circle(base, radius, color, numTri)
 {
     var i;
@@ -263,6 +338,7 @@ function wave(numTri)
 
     }
 }
+
 
 function crab(posX, posY, color)
 {

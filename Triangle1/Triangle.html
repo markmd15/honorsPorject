@@ -20,7 +20,13 @@
     attribute vec4 vPosition;
     attribute vec4 vColor;
 
+    /*
+    attribute vec4 crabPosition;
+    attribute vec4 crabColor;
+    */
+
     varying vec4 fColor;
+    //varying vec4 cColor;
     //uniform int t;
 
     uniform float theta;
@@ -33,13 +39,17 @@
     float s = sin( theta );
     float c = cos( theta );
 
+
     gl_Position.x = -s * vPosition.x + c * vPosition.y;
     gl_Position.y =  s * vPosition.y + c * vPosition.x;
     gl_Position.z = 0.0;
     gl_Position.w = 1.0;
 
+
     //gl_Position = vPosition;
+    //gl_Position = crabPosition;
     fColor = vColor;
+    //cColor= crabColor;
     }
 </script>
 
@@ -53,6 +63,7 @@ precision mediump float;
 //  varying fColor (passed from vertex shader) is
 // assigned to gl_FragColor.
 varying vec4 fColor;
+//varying vec4 cColor;
 void
 main()
 {
